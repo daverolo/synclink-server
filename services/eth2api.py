@@ -16,17 +16,7 @@ from models.get_state_finality_checkpoints_response import \
 from models.get_syncing_status_response import GetSyncingStatusResponse
 from models.get_version_response import GetVersionResponse
 
-
-class API:
-    def __init__(self, apiUrl):
-        self.apiUrl = apiUrl
-        self.client = httpx.AsyncClient(base_url=apiUrl)
-
-    async def request(self, url_path):
-        response = await self.client.get(url_path)
-
-        return response.json()
-
+from .base_api import API
 
 @serialize_all_methods()
 class BeaconAPI(API):
