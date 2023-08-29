@@ -79,12 +79,12 @@ The SyncLink Server [options](#options) must be configured either thru a yaml [c
 
 ### Options
 
-| Name            | Default               | Required | Description                                                                         |
-| --------------- | --------------------- | -------- | ----------------------------------------------------------------------------------- |
-| addr            | 0.0.0.0               | No       | The IP address or domain where the SyncLink Server is listening for new connections |
-| port            | 8000                  | No       | The port where the SyncLink Server is listening for new connections                 |
-| eth_api_address | http://localhost:5051 | No       | The URL to your Beacon node API (usually running on the same host)                  |
-| config          | config.yaml           | No       | Path to a yaml config file                                                          |
+| Name              | Default                 | Required | Description                                                                              |
+| ----------------- | ----------------------- | -------- | ---------------------------------------------------------------------------------------- |
+| addr              | 0.0.0.0                 | No       | The IP address or domain where the SyncLink Server is listening for new connections      |
+| port              | 8000                    | No       | The port where the SyncLink Server is listening for new connections                      |
+| eth_api_addresses | [http://localhost:5051] | No       | List of URLs to your Ethereum Beacon API nodes (one is usually running on the same host) |
+| config            | config.yaml             | No       | Path to a yaml config file                                                               |
 
 ### Config file
 
@@ -94,7 +94,9 @@ Example `config.yaml` (see [config.yaml.example](./config.yaml.example)):
 
 ```
 port: 8000
-eth_api_address: http://localhost:5051
+eth_api_addresses:
+  - http://localhost:5051
+  - http://host.docker.internal:5051
 ```
 
 ### Command line arguments
@@ -127,14 +129,12 @@ will be converted to `python main.py --addr "127.0.0.1"`.
 For lists, the environment variables need additionally suffixed with a number, e.g.:
 
 ```
-export SYLI_NODE_1="10.0.0.1"
-export SYLI_NODE_2="10.0.0.2"
+export SYLI_ETH_API_ADDRESS_1="10.0.0.1"
+export SYLI_ETH_API_ADDRESS_2="10.0.0.2"
 python main.py
 ```
 
-will be converted to `python main.py --node "10.0.0.1" --node "10.0.0.2"`.
-
-> However, this is just a demo because the SyncLink Server currently has no arguments that require a list!
+will be converted to `python main.py --eth_api_address "10.0.0.1" --eth_api_address "10.0.0.2"`.
 
 If you have accidently specified an environment variable that is not supported (see [options](#options)), you need to unset the variable to avoid an error. For example:
 

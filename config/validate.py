@@ -3,6 +3,7 @@ Validator class for specific config types.
 FIXME: for whetever reason validators fail on macOS with errors like:
 AttributeError: module 'validators' has no attribute 'ip_address'
 """
+from typing import List
 import validators
 
 class validate:
@@ -20,7 +21,8 @@ class validate:
         return port
 
     @staticmethod
-    def eth_api_address(cls, eth_api_address: str) -> str:
-        # if not validators.url(eth_api_address):
-        #     raise ValueError(f"'eth_api_address' must be a valid url, got: {eth_api_address}")
-        return eth_api_address
+    def eth_api_addresses(cls, eth_api_addresses: List[str]) -> List[str]:
+        # for i in nodes:
+        #     if not validators.url(i):
+        #         raise ValueError(f"'eth_api_addresses' address must be a valid url, got: {i}")
+        return eth_api_addresses

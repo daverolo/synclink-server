@@ -14,4 +14,5 @@ services:
       DOCK_ENV: 'prod'
       # SYLI_ADDR: 0.0.0.0
       # SYLI_PORT: 8000
-      # SYLI_ETH_API_ADDRESS: http://localhost:5051
+      SYLI_ETH_API_ADDRESS_1: http://localhost:5051
+      SYLI_ETH_API_ADDRESS_2: http://host.docker.internal:5051

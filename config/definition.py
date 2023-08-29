@@ -1,8 +1,10 @@
 """
 Schema definition of the hierarchical config files and CLI arguments.
 """
+from typing import List
 from pydantic import validator
 from pydantic.dataclasses import dataclass
+from dataclasses import field
 from .validate import validate
 
 @dataclass
@@ -15,10 +17,10 @@ class Schema:
     @validator("port")
     def check_port(cls, port: int) -> int:
         return validate.port(cls,port)
-    eth_api_address: str = "http://localhost:5051"
-    @validator("eth_api_address")
-    def check_eth_api_address(cls, eth_api_address: str) -> str:
-        return validate.eth_api_address(cls,eth_api_address)
+    eth_api_addresses: List[str] = field(default_factory=lambda: ["http://localhost:5051"])
+    @validator("eth_api_addresses")
+    def check_eth_api_addresses(cls, eth_api_addresses: List[str]) -> List[str]:
+        return validate.eth_api_addresses(cls,eth_api_addresses)
     config: str = "config.yaml"
 
 cli_args = {
@@ -36,12 +38,13 @@ cli_args = {
         'default' : 8000,
         'help' : 'the port of your synclink erver',
     },
-    'eth_api_address': {
-        'args': ["-e", "--eth_api_address", "--api", "--node"],
+    'eth_api_addresses': {
+        'args': ["-e", "--eth_api_address", "--eth_api_addresses", "--api", "--apis", "--node", "--nodes"],
         'type': str,
-        'dest' : 'eth_api_address',
-        'default' : "http://127.0.0.1:5051",
-        'help' : 'the http address of your eth api node',
+        'action': 'append',
+        'dest' : 'eth_api_addresses',
+        'default' : ["http://127.0.0.1:5051"],
+        'help' : 'the http address of your eth api nodes',
     },
     'config': {
         'args': ["-c", "--config"],
